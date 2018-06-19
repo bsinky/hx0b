@@ -7,7 +7,7 @@ import buddy.CompilationShould;
 class TestMain extends buddy.SingleSuite
 {
     public function new() {
-        describe("Binary literals", {
+        describe("Invalid literals fail compilation", {
             it("should reject invalid binary string 2", {
                 CompilationShould.failFor(Hx0b.b("2"));
             });
@@ -23,7 +23,9 @@ class TestMain extends buddy.SingleSuite
             it("should reject invalid binary string 0b1001", {
                 CompilationShould.failFor(Hx0b.b("0b1001"));
             });
+        });
 
+        describe("Binary literals give expected values", {
             it("should return 0 for 0", {
                 Hx0b.b("0").should.be(0);
             });
@@ -46,6 +48,16 @@ class TestMain extends buddy.SingleSuite
 
             it("should return 146 for 10010010", {
                 Hx0b.b("10010010").should.be(146);
+            });
+        });
+
+        describe("Bitwise shift tests", {
+            it("should shift right correctly", {
+                (Hx0b.b("100") >> 2).should.be(Hx0b.b("001"));
+            });
+
+            it("should shift left correctly", {
+                (Hx0b.b("00100") << 2).should.be(Hx0b.b("10000"));
             });
         });
     }
