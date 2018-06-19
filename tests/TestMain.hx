@@ -7,7 +7,7 @@ import buddy.CompilationShould;
 class TestMain extends buddy.SingleSuite
 {
     public function new() {
-        describe("Invalid literals fail compilation", {
+        describe("Binary literal handling", {
             it("should reject invalid binary string 2", {
                 CompilationShould.failFor(Hx0b.b("2"));
             });
@@ -23,6 +23,18 @@ class TestMain extends buddy.SingleSuite
             it("should reject invalid binary string 0b1001", {
                 CompilationShould.failFor(Hx0b.b("0b1001"));
             });
+
+            it("should allow spaces as optional separators", {
+                Hx0b.b("0100 1000 0001");
+            });
+
+            it("should allow spaces as optional separators", {
+                Hx0b.b("0100_1000_0001");
+            });
+
+            it("should allow a mix of spaces and underscores as optional separators", {
+                Hx0b.b("0100 1000_0001");
+            });
         });
 
         describe("Binary literals give expected values", {
@@ -30,8 +42,8 @@ class TestMain extends buddy.SingleSuite
                 Hx0b.b("0").should.be(0);
             });
 
-            it("should return 0 for 00000000", {
-                Hx0b.b("00000000").should.be(0);
+            it("should return 0 for 0000_0000", {
+                Hx0b.b("0000_0000").should.be(0);
             });
 
             it("should return 1 for 1", {
@@ -53,11 +65,11 @@ class TestMain extends buddy.SingleSuite
 
         describe("Bitwise shift tests", {
             it("should shift right correctly", {
-                (Hx0b.b("100") >> 2).should.be(Hx0b.b("001"));
+                (Hx0b.b("0001_0000") >> 2).should.be(Hx0b.b("0000_1000"));
             });
 
             it("should shift left correctly", {
-                (Hx0b.b("00100") << 2).should.be(Hx0b.b("10000"));
+                (Hx0b.b("0000_1000") << 2).should.be(Hx0b.b("0001_0000"));
             });
         });
     }

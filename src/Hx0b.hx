@@ -13,12 +13,12 @@ class Hx0b
 			var i = binaryString.length - 1 - n;
 			var c = binaryString.charAt(n);
 
-			if (c != '0' && c != '1') {
+			if (c != '0' && c != '1' && c != ' ' && c != '_') {
 				Context.error('Invalid character "${c}" in binary string "${binaryString}"',
 					Context.currentPos());
 			}
 
-			if (c == '0') {
+			if (c == '0' || c == ' ' || c == '_') {
 				continue;
 			}
 
